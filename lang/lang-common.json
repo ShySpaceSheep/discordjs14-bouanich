@@ -1,7 +1,20 @@
 {
     "log": {
+        "task": {
+            "botStarting": "[TASK] Staring {CLIENT_USERNAME}, please wait...",
+            "verifyingLang": "[TASK] Checking support for [{LANGUAGE}] language...",
+            "settingPresence": "[TASK] Setting up {CLIENT_USERNAME}'s rich presence..."
+        },
+        "success": {
+            "onBotOnline": "[STATUS] All set up and good to go! {CLIENT_USERNAME} is now online!",
+            "onValidLanguage": "[TASK] Language verified, successfully set language to [{LANGUAGE}]."
+        },
         "warning": {
-            "invalidLanguage": "The current selected language is not supported yet. Using default language [EN]."
+            "invalidLanguage": "[TASK] Attempted to use an unsupported language [{LANGUAGE}]. Reverting back to default language [EN]."
+        },
+        "error": {
+            "startFailure": "[ERROR] Could not start {CLIENT_USERNAME} due to a fatal error: {ERROR}",
+            "invalidPresence": "[ERROR] Could not set activity presence due to: {ERROR}"
         }
     }
 }
