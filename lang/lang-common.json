@@ -1,0 +1,7 @@
+{
+    "log": {
+        "warning": {
+            "invalidLanguage": "The current selected language is not supported yet. Using default language [EN]."
+        }
+    }
+}
