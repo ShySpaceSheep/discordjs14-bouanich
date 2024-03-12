@@ -13,6 +13,7 @@
             "invalidLanguage": "[TASK] Attempted to use an unsupported language [{LANGUAGE}]. Reverting back to default language [EN]."
         },
         "error": {
+            "unavailable": "[ERROR] A startup error has occured. Please make sure the bot is available.",
             "startFailure": "[ERROR] Could not start {CLIENT_USERNAME} due to a fatal error: {ERROR}",
             "invalidPresence": "[ERROR] Could not set activity presence due to: {ERROR}"
         }
