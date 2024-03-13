@@ -3,15 +3,18 @@ import commons = require('../../lang/lang-common.json');
 import { Client } from "discord.js";
 import IBotClient from "../interfaces/IBotClient";
 import Handler from './Handler';
+import { setGlobalLanguage } from '../utils/LangSelector';
 
 export default class BotClient extends Client implements IBotClient {
     handler: Handler;
     botToken: string;
+    language: string;
 
     constructor() {
         super({ intents: [] });
         this.handler = new Handler(this);
         this.botToken = process.env.TOKEN;
+        this.language = setGlobalLanguage();
     }
 
     Init(): void {

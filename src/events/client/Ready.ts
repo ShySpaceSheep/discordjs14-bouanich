@@ -19,7 +19,7 @@ export default class Ready extends Event {
         try {
             this.client.user.setPresence({ 
                 status: PresenceUpdateStatus.DoNotDisturb,
-                activities: [{ name: getLangJSONText('presenceActivity'), type: ActivityType.Custom }]
+                activities: [{ name: getLangJSONText('presenceActivity', this.client.language), type: ActivityType.Custom }]
             }
         ); 
         } catch (error) {
