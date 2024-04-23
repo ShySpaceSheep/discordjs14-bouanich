@@ -1,21 +1,31 @@
 import 'dotenv/config';
 import commons = require('../../lang/lang-common.json');
-import { Client } from "discord.js";
+import { Client, Collection } from "discord.js";
 import IBotClient from "../interfaces/IBotClient";
 import Handler from './Handler';
 import { setGlobalLanguage } from '../utils/LangSelector';
+import Command from './Command';
+import Subcommand from './Subcommand';
 
 export default class BotClient extends Client implements IBotClient {
     handler: Handler;
     botToken: string;
     language: string;
+    commands: Collection<string, Command>;
+    subcommands: Collection<string, Subcommand>;
+    cooldowns: Collection<string, Collection<string, number>>;
 
     constructor() {
         super({ intents: [] });
         this.handler = new Handler(this);
         this.botToken = process.env.TOKEN;
         this.language = setGlobalLanguage();
+
+        this.commands = new Collection();
+        this.subcommands = new Collection();
+        this.cooldowns = new Collection();
     }
+    
 
     Init(): void {
         this.LoadHandlers();
@@ -25,5 +35,6 @@ export default class BotClient extends Client implements IBotClient {
 
     LoadHandlers(): void {
         this.handler.LoadEvents();
+        this.handler.LoadCommands();
     }
 }
