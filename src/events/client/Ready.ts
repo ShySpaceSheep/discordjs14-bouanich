@@ -1,8 +1,11 @@
+import 'dotenv/config';
 import commons = require('../../../lang/lang-common.json');
-import { ActivityType, Events, PresenceUpdateStatus } from "discord.js";
+import { ActivityType, Collection, Events, PresenceUpdateStatus, REST, Routes } from "discord.js";
 import BotClient from "../../classes/BotClient";
 import Event from "../../classes/Event";
 import { getLangJSONText } from '../../utils/LangSelector';
+import Command from '../../classes/Command';
+import { config } from 'dotenv';
 
 export default class Ready extends Event {
     constructor(client: BotClient) {
@@ -13,7 +16,22 @@ export default class Ready extends Event {
         });
     }
 
-    Execute(...args: any): void {
+    private GetJSON(commands: Collection<string, Command>): object[] {
+        const data: object[] = [];
+        commands.forEach(command => {
+            data.push({
+                name: command.name,
+                description: command.description,
+                options: command.options,
+                default_member_permissions: command.default_member_permissions.toString(),
+                dm_permission: command.dm_permissions
+            })
+        });
+
+        return data;
+    }
+
+    async Execute(...args: any) {
         if (this.client.user == null) { throw new Error(`\u001b[31m` + commons.log.error.unavailable + `\u001b[0m`) }
 
         try {
@@ -27,5 +45,11 @@ export default class Ready extends Event {
         }
 
         console.log(`\u001b[32m` + commons.log.success.onBotOnline.replace('{CLIENT_USERNAME}', this.client.user.username) + `\u001b[0m`)
+
+        const commands: object[] = this.GetJSON(this.client.commands);
+        const rest = new REST().setToken(process.env.TOKEN);
+        const setCommands = await rest.put(Routes.applicationGuildCommands(process.env.CLIENTID, process.env.HOMEGUILDID), {
+            body: commands
+        });
     }
 }
