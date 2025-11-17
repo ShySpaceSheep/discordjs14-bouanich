@@ -15,7 +15,7 @@
     "axios": "^1.8.2",
     "discord.js": "^14.20.0",
     "dotenv": "^16.4.5",
-    "glob": "^10.3.10"
+    "glob": "^11.1.0"
   },
   "devDependencies": {
     "@types/node": "^20.11.24",
